@@ -25,7 +25,9 @@ AccountModel.facebookFindOrCreate = function(profile, callback) {
                 "uid": uuid.v4(),
                 "firstname": profile.name.givenName,
                 "lastname": profile.name.familyName,
-                "email": profile.emails[0].value
+                "email": profile.emails[0].value,
+                "photos":profile.photos[0].value,
+                "cover":profile._json.cover.source
             };
             var referenceDocument = {
                 "type": "facebook",
@@ -57,9 +59,39 @@ AccountModel.findByUserId = function(userId, callback) {
     );
     db.query(query, ["user::" + userId], function(error, result) {
         if(error) {
+            console.log(error);
             return callback(error, null);
         }
         callback(null, result[0]);
+    });
+}
+
+AccountModel.findAll = function(userId,callback) {
+    var query = N1qlQuery.fromString(
+        "SELECT users.* " +
+        "FROM `" + config.couchbase.bucket + "` AS users WHERE META(users).id != $1 AND type=\"user\""
+    );
+    db.query(query, ["user::" + userId], function(error, result) {
+        if(error) {
+            return callback(error, null);
+        }
+        callback(null, result);
+    });
+}
+
+AccountModel.findAllArray = function(userIds,callback) {
+    console.log(userIds);
+    var query = N1qlQuery.fromString(
+        "SELECT users.* " +
+        "FROM `" + config.couchbase.bucket + "` WHERE uid IN $1 AND type=\"user\""
+    );
+    db.query(query, [userIds], function(error, result) {
+        if(error) {
+            console.log(error);
+            return callback(error, null);
+        }
+        console.log(result);
+        callback(null, result);
     });
 }
 

@@ -1,0 +1,16 @@
+<header class="header-bar">
+
+    <figure class="header-background" *ngIf="chat.users?.length == 1" [ngStyle]="{'background-image':'url('+chat.users[0]?.cover+')'}"></figure>
+
+    <figure class="header-background" *ngIf="chat.users?.length > 1"></figure>
+
+    <avatar *ngIf="chat.users" [profile]="chat.users[0]"></avatar>
+
+    <h1 *ngIf="chat.users" class="header-name">{{chat.users[0].firstname}} {{chat.users[0].lastname}}</h1>
+
+    <nav class="nav-icons">
+        <ul class="nav-list">
+            <li class="nav-list-item" *ngFor="#user of chat.users"><avatar [profile]="user"></avatar></li>
+        </ul>
+    </nav>
+</header>

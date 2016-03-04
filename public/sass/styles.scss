@@ -1,0 +1,54 @@
+//components css
+
+@import 'node_modules/node-reset-scss/scss/_reset.scss';
+
+@import 'public/sass/mixins';
+
+html,body{
+  height:100%;
+  font-size:16px;
+  font-family: 'Lato', sans-serif;
+}
+
+*{
+  box-sizing: border-box;
+  outline:none;
+}
+@import 'public/app/components/chat-list/chat-list';
+@import 'public/app/components/header/header';
+@import 'public/app/components/search/search';
+@import 'public/app/components/avatar/avatar';
+@import 'public/app/components/home-content/home-content';
+@import 'public/app/components/last-message/last-message';
+@import 'public/app/pages/chat-page/chat-page';
+
+@import 'public/app/pages/home/home';
+
+
+
+
+.tint{
+  position:absolute;
+  @include gradientBackground(#000,transparent,#000);
+  opacity:.55;
+  top:0;
+  left:0;
+  width:100%;
+  height: 101%;
+  z-index: -1;
+  margin:0;
+}
+
+.cover-img {
+  height: 100%;
+  width:100%;
+  position: absolute;
+  top:0;
+  left:0;
+  margin:0;
+  z-index: -2;
+  background-size: cover;
+  background-color: #eee;
+  background-position: center center;
+  //@include blur();
+}

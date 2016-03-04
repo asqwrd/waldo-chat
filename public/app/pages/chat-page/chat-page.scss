@@ -1,0 +1,55 @@
+@import 'public/app/components/messages/message';
+
+.send-form{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background: #e5e5e5;
+  padding: 10px;
+  text-align: center;
+
+  .chat-box{
+    width: calc(50% - 35px);
+    max-width: 280px;
+    border: none;
+    background: #fff;
+    padding: 25px;
+    position: relative
+
+  }
+  .send-button{
+    background:transparent;
+    border:none;
+    border-radius: 100%;
+    display: inline-block;
+    margin-left:20px;
+    .avatar{
+      @include transform(none);
+      left:auto;
+      top:auto;
+    }
+  }
+}
+
+.message-list{
+  height:calc(70% - 85px);
+  background: #e5e5e5;
+  padding:25px;
+  position: relative;
+  overflow: hidden;
+}
+
+.message-list-item{
+  padding:20px 0;
+
+  &.right{
+    text-align:right;
+
+    .avatar{
+      float:right;
+      margin:0 0 0 20px;
+    }
+  }
+
+}
+

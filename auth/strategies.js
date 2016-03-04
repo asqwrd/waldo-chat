@@ -9,7 +9,8 @@ var AccountModel = require("../models/accountmodel");
 passport.use(new FacebookStrategy({
     clientID: config.facebook.client_id,
     clientSecret: config.facebook.client_secret,
-    callbackURL: config.facebook.callback_url
+    callbackURL: config.facebook.callback_url,
+    profileFields: config.facebook.profileFields
 }, function(accessToken, refreshToken, profile, done) {
     AccountModel.facebookFindOrCreate(profile, function(error, user) {
         if(error) {

@@ -1,0 +1,7 @@
+<header-component chatid = "{{chatId}}"></header-component>
+<ul class="message-list" perfectScroll>
+    <li class="message-list-item" *ngFor="#message of messages" [class.right] = "profile.uid == message.userId"><message [message]="message.text" [userId]="message.userId" ></message></li>
+</ul>
+<form action="" class="send-form">
+    <input placeholder="Type your message..." class="chat-box" [(ngModel)]="chatBox" autocomplete="off" /><button class="send-button" (click)="send(chatBox,profile.uid)"><avatar [profile]="profile"></avatar></button>
+</form>

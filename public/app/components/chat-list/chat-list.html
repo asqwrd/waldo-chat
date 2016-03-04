@@ -1,0 +1,25 @@
+<header class="chat-list-header">
+    <h1 class="header-logo">Waldo</h1>
+    <avatar [profile]="profile" class="avatar-container"></avatar>
+</header>
+<section class="chat-list-wrapper" perfectScroll>
+    <ul class="chat-list">
+        <li class="chat-list-item" *ngFor="#chat of chats" [ngStyle]="{'background-image':'url('+chat.users[0].cover+')'}" (click)="startChat(chat.id)">
+            <figure class="tint"></figure>
+            <div class="chat-details-container">
+                <div class="avatar-container">
+                    <figure class="avatar" *ngFor="#user of chat.users">
+                        <img class="avatar-img" [src] = "user.photos"/>
+                        <span class="avatar-text">{{user.firstname  | avatarInitial}}</span>
+                    </figure>
+                </div>
+                <article class="chat-details">
+                    <h1 class="details-name">
+                       {{chat.users | nameList}}
+                    </h1>
+                    <last-message [chatId] = "chat.id"></last-message>
+                </article>
+            </div>
+        </li>
+    </ul>
+</section>

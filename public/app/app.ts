@@ -6,6 +6,7 @@ import {
 
 import {bootstrap} from "angular2/platform/browser";
 
+
 import {
     RouteConfig,
     RouterLink,
@@ -19,7 +20,11 @@ import {
     Router
 } from 'angular2/router';
 
-import { DefaultPage } from './default/default';
+import { ChatPage } from './pages/chat-page/chat-page';
+import { LoginPage } from './pages/login/login';
+import { SecurePage } from './pages/secure/secure';
+import { HomePage } from './pages/home/home';
+import { EventService } from './services/event-service';
 
 @Component({
     selector: "my-app",
@@ -28,7 +33,9 @@ import { DefaultPage } from './default/default';
 })
 
 @RouteConfig([
-    { path: "/", as: "Default", component: DefaultPage },
+    { path: "/", as: "Login", component: LoginPage },
+    { path: "/chat/...", as: "HomePage", component: HomePage },
+    { path: "/register", as: "SecurePage", component: SecurePage },
 ])
 
 class App {
@@ -43,4 +50,4 @@ class App {
 
 }
 
-bootstrap(App, [ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy})]);
+bootstrap(App, [EventService,ROUTER_PROVIDERS, provide(LocationStrategy, {useClass: HashLocationStrategy})]);
