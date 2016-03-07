@@ -16,7 +16,10 @@ export class PerfectScrollDirective implements OnInit{
     }
 
     ngOnInit() {
-        Ps.initialize(this.el.nativeElement);
+        Ps.initialize(this.el.nativeElement,{
+            wheelSpeed: 1,
+            wheelPropagation: true,
+        });
     }
 
 }

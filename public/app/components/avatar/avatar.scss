@@ -9,16 +9,54 @@
   border-radius: 100%;
   @include centerElement();
   .avatar-img{
-    width: 100%;
-    height:100%;
-    position:absolute;
-    left:0;
-    top:0;
+    position:relative;
+    display:inline-block;
+    float:left;
+    background-size: cover;
+    background-position: center center;
+
   }
   .avatar-text{
     text-transform: uppercase;
     color: #fff;
     font-size: 2rem;
     line-height: 50px;
+  }
+
+  &.one{
+    .avatar-img{
+      width:100%;
+      height:100%;
+    }
+
+  }
+  &.two{
+    .avatar-img{
+      width:50%;
+      height:100%;
+    }
+
+  }
+
+  &.three{
+    .avatar-img {
+      width: 50%;
+      height: 50%;
+    }
+
+    img.avatar-img:nth-of-type(3){
+      width:100%;
+      height:50%
+    }
+  }
+
+
+
+  &.four{
+    .avatar-img {
+      width: 50%;
+      height: 50%;
+    }
+
   }
 }

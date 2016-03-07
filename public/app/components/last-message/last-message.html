@@ -1,1 +1,1 @@
-<p class="last-message">{{lastUser.firstname}} - {{lastMessage}}</p>
+<p class="last-message" *ngIf="lastUser">{{lastUser?.firstname}} - {{lastMessage}}</p>

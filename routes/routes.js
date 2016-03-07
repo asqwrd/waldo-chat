@@ -13,9 +13,14 @@ var appRouter = function(app) {
 
     //users routes
 
+
     app.get("/user", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            res.writeHead(404, {
+                'Location': '/'
+            });
+            return res.end();
+
         }
         AccountModel.findByUserId(req.user, function(error, result) {
             res.send({"profile": result});
@@ -25,7 +30,10 @@ var appRouter = function(app) {
 
     app.get("/users", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            res.writeHead(404, {
+                'Location': '/'
+            });
+            return res.end();
         }
         AccountModel.findAll(req.user,function(error, result) {
             res.send({"users": result});
@@ -47,7 +55,10 @@ var appRouter = function(app) {
 
     app.get("/chats", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            res.writeHead(404, {
+                'Location': '/'
+            });
+            return res.end();
         }
         ChatModel.getAll(req.user, function(error, result) {
             res.send(result);
@@ -57,9 +68,8 @@ var appRouter = function(app) {
 
     app.get("/chat/:id", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            return res.redirect("/#/");
         }
-        console.log(req.params.id);
         ChatModel.getChat(req.params.id,req.user, function(error, result) {
             res.send(result);
 
@@ -69,7 +79,7 @@ var appRouter = function(app) {
 
     app.post("/chats", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            return res.redirect("/#/");
         }
         ChatModel.create(req.user,req.body, function(error, result) {
             res.send(result);
@@ -82,7 +92,7 @@ var appRouter = function(app) {
 
     app.post("/secure", function(req, res, next) {
         if(!req.user) {
-            return res.redirect("/");
+            return res.redirect("/#/");
         }
         AccountModel.updateUser(req.user, req.body, function(error, result) {
             if(!error) {

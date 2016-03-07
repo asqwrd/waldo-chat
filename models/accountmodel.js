@@ -62,7 +62,7 @@ AccountModel.findByUserId = function(userId, callback) {
             console.log(error);
             return callback(error, null);
         }
-        callback(null, result[0]);
+        callback(null, result);
     });
 }
 

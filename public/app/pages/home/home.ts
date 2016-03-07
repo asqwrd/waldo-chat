@@ -44,13 +44,14 @@ export class HomePage {
         this.profile ={};
         this.http.get("/user").map( (responseData) => {
             var data = responseData.json();
+            console.log(data);
             this.profile = data.profile;
             return data.profile;
         }).subscribe((success) => {
             var data = success;
             this.profile = data;
         }, (error) => {
-            console.log(JSON.stringify(error));
+            console.log(error);
         });
 
     }

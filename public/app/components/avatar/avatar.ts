@@ -21,7 +21,8 @@ declare var PUBNUB:any;
 
 @View({
     templateUrl: 'app/components/avatar/avatar.html',
-    pipes:[AvatarInitial]
+    pipes:[AvatarInitial],
+    directives:[]
 })
 
 export class Avatar {
@@ -38,6 +39,14 @@ export class Avatar {
 
     ngOnInit(){
 
+    }
+
+    ngAfterViewInit(){
+
+    }
+
+    keys(array) : Array<any> {
+        return Object.keys(array);
     }
 
 }

@@ -51,7 +51,7 @@ export class LastMessage {
                         return data2;
                     }).subscribe((success) => {
                         var data = success;
-                        this.lastUser = data;
+                        this.lastUser = data[0];
                     }, (error) => {
                         console.log(error);
                     });

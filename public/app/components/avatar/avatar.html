@@ -1,4 +1,3 @@
-<figure class="avatar">
-    <img class="avatar-img" [src] = "profile.photos"/>
-    <span class="avatar-text">{{profile?.firstname  | avatarInitial}}</span>
+<figure class="avatar" [class.one] = "profile?.length == 1" [class.two] ="profile?.length ==2" [class.three]="profile?.length == 3" [class.four]="profile?.length >= 4">
+        <div class="avatar-img" *ngFor="#key of keys(profile)" [ngStyle]="{'background-image':'url('+profile[key].photos+')'}"></div>
 </figure>

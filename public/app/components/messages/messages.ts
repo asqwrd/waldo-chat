@@ -5,6 +5,7 @@
 import {Component, View,Input} from "angular2/core";
 import {Http, HTTP_PROVIDERS} from "angular2/http";
 import {AvatarInitial} from "../../libs/pipes";
+import {Avatar} from "../../components/avatar/avatar";
 
 import 'rxjs/Rx';
 
@@ -18,7 +19,8 @@ declare var PUBNUB:any;
 
 @View({
     templateUrl: 'app/components/messages/messages.html',
-    pipes:[AvatarInitial]
+    pipes:[AvatarInitial],
+    directives:[Avatar]
 })
 
 export class Message {
@@ -46,6 +48,7 @@ export class Message {
             }).subscribe((success) => {
                 var data = success;
                 this.user = data;
+                console.log(this.user);
             });
         }
     }

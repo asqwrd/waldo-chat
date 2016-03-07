@@ -6,7 +6,6 @@ import {
 
 import {bootstrap} from "angular2/platform/browser";
 
-
 import {
     RouteConfig,
     RouterLink,
@@ -46,6 +45,11 @@ class App {
     constructor(router: Router, location: Location) {
         this.router = router;
         this.location = location;
+
+    }
+
+    ngOnInit(){
+
     }
 
 }

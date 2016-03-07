@@ -44,7 +44,7 @@ export class ChatPage {
         this.pubnub.history({
             channel:this.params.get('chatId'),
             count : 100,
-            callback : (m)=> {this.messages = m[0];}
+            callback : (m)=> {this.messages = m[0]; console.log(this.messages)}
         });
 
         this.pubnub.subscribe({
@@ -57,7 +57,7 @@ export class ChatPage {
         this.http.get("/user").map( (responseData) => {
             var data = responseData.json();
             this.profile = data.profile;
-            return data.profile;
+            return this.profile;
         }).subscribe((success) => {
             var data = success;
             this.profile = data;
@@ -68,9 +68,11 @@ export class ChatPage {
 
     ngOnInit(){
         this.chatId = this.params.get('chatId');
+        console.log(this.messages);
     }
 
     send(message,userId) {
+        console.log(userId);
         var messageObj = {
             channel:this.params.get('chatId'),
             message: {text:message,userId:userId},

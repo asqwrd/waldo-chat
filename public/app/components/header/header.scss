@@ -45,6 +45,52 @@
       opacity:.7;
       content:'';
     }
+
+    .cover-img{
+      position:relative;
+      display:inline-block;
+      float:left;
+      background-size: cover;
+      background-position: center center;
+
+    }
+
+    &.one{
+      .cover-img{
+        width:100%;
+        height:100%;
+      }
+
+    }
+    &.two{
+      .cover-img{
+        width:50%;
+        height:100%;
+      }
+
+    }
+
+    &.three{
+      .cover-img {
+        width: 50%;
+        height: 50%;
+      }
+
+      img.cover-img:nth-of-type(3){
+        width:100%;
+        height:50%
+      }
+    }
+
+
+
+    &.four{
+      .cover-img {
+        width: 50%;
+        height: 50%;
+      }
+
+    }
   }
   .nav-list{
     margin:0;

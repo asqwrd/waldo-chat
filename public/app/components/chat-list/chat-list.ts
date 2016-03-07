@@ -55,12 +55,13 @@ export class ChatList {
             }).subscribe((success) => {
                 var data3 = success;
                 this.chats = data3;
-                console.log(this.chats);
             }, (error) => {
                 console.log(error);
             });
         }, (error) => {
             console.log(JSON.stringify(error));
+            this.router.navigate(['Login']);
+
         });
 
     }
