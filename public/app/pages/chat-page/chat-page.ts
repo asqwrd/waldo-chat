@@ -68,7 +68,6 @@ export class ChatPage {
 
     ngOnInit(){
         this.chatId = this.params.get('chatId');
-        console.log(this.messages);
     }
 
     send(message,userId) {

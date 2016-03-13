@@ -3,5 +3,10 @@
     <li class="message-list-item" *ngFor="#message of messages" [class.right] = "profile[0]?.uid == message.userId"><message [message]="message.text" [userId]="message.userId" ></message></li>
 </ul>
 <form action="" class="send-form">
-    <input placeholder="Type your message..." class="chat-box" [(ngModel)]="chatBox" autocomplete="off" /><button class="send-button" (click)="send(chatBox,profile[0].uid)"><avatar [profile]="profile"></avatar></button>
+    <div class="chat-box-wrapper">
+        <input placeholder="Type your message..." class="chat-box" [(ngModel)]="chatBox" autocomplete="off" />
+    </div>
+    <button class="send-button" (click)="send(chatBox,profile[0].uid)">
+        <avatar [profile]="profile"></avatar>
+    </button>
 </form>

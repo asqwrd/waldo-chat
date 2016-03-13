@@ -48,7 +48,6 @@ export class Message {
             }).subscribe((success) => {
                 var data = success;
                 this.user = data;
-                console.log(this.user);
             });
         }
     }

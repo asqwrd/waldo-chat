@@ -1,3 +1,7 @@
-<figure class="avatar" [class.one] = "profile?.length == 1" [class.two] ="profile?.length ==2" [class.three]="profile?.length == 3" [class.four]="profile?.length >= 4">
-        <div class="avatar-img" *ngFor="#key of keys(profile)" [ngStyle]="{'background-image':'url('+profile[key].photos+')'}"></div>
+<figure *ngIf="profile.length" class="avatar" [class.one] = "profile?.length == 1" [class.two] ="profile?.length ==2" [class.three]="profile?.length == 3" [class.four]="profile?.length >= 4">
+        <div class="avatar-img" *ngFor="#key of keys(profile)" [ngStyle]="{'background-image':'url('+profile[key]?.photos+')'}"></div>
+</figure>
+
+<figure *ngIf="!profile.length" class="avatar one">
+        <div class="avatar-img "  [ngStyle]="{'background-image':'url('+profile?.photos+')'}"></div>
 </figure>

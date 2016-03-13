@@ -8,8 +8,27 @@
   padding: 10px 25px;
   text-align: right;
 
-  .chat-box{
+  .chat-box-wrapper{
     width: calc(85% - 35px);
+    position: relative;
+    display: inline-block;
+    &:after{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      right:-20px;
+      left:auto;
+      top: 0;
+      bottom: auto;
+      border: 22px solid;
+      border-color: #fff transparent transparent transparent;
+
+    }
+  }
+
+  .chat-box{
+    width: 100%;
     border: none;
     background: #fff;
     padding: 25px;
@@ -26,7 +45,7 @@
     .avatar{
       @include transform(none);
       left:auto;
-      top:auto;
+      top:10px;
     }
   }
 }
@@ -44,11 +63,6 @@
 
   &.right{
     text-align:right;
-
-    .avatar{
-      float:right;
-      margin:0 0 0 20px;
-    }
   }
 
 }

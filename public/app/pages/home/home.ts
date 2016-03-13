@@ -44,7 +44,6 @@ export class HomePage {
         this.profile ={};
         this.http.get("/user").map( (responseData) => {
             var data = responseData.json();
-            console.log(data);
             this.profile = data.profile;
             return data.profile;
         }).subscribe((success) => {

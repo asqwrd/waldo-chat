@@ -63,16 +63,18 @@ export class HeaderComponent {
     ngOnInit(http:Http){
 
         this.chat= {};
-        this.http.get("/chat/"+this.chatid).map( (responseData) => {
-            var data = responseData.json();
-            this.chat = data;
-            return data;
-        }).subscribe((success) => {
-            var data = success;
-            this.chat = data;
+        if(this.chatid) {
+            this.http.get("/chat/" + this.chatid).map((responseData) => {
+                var data = responseData.json();
+                this.chat = data;
+                return data;
+            }).subscribe((success) => {
+                var data = success;
+                this.chat = data;
 
 
-        });
+            });
+        }
     }
 
     compose(){

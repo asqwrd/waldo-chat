@@ -131,3 +131,22 @@
   }
 }
 
+.header-nav{
+  position:absolute;
+  bottom:15%;
+  right:0;
+  .header-nav-list{
+    list-style: none;
+   .header-nav-item{
+     display: inline-block;
+     text-transform: uppercase;
+     color: #fff;
+     font-weight: 600;
+     padding: 0 10px;
+     cursor: pointer;
+   }
+
+  }
+
+}
+

@@ -12,6 +12,7 @@ import {HeaderComponent} from '../../components/header/header';
 import {EventService} from '../../services/event-service';
 import 'rxjs/Rx';
 import {AvatarInitial,ValuesPipe} from "../../libs/pipes";
+import {Avatar} from '../../components/avatar/avatar';
 
 
 
@@ -24,7 +25,7 @@ import {AvatarInitial,ValuesPipe} from "../../libs/pipes";
 
 @View({
     templateUrl: 'app/components/search/search.html',
-    directives:[NgStyle,NgFor],
+    directives:[NgStyle,NgFor,Avatar],
     pipes:[AvatarInitial,ValuesPipe]
 })
 
@@ -62,7 +63,6 @@ export class SearchOverlay {
     }
 
     private composeToggle(data:any){
-        console.log(data);
         this.showCompose = data;
     }
 
@@ -92,8 +92,6 @@ export class SearchOverlay {
 
     }
     createChatRoom(){
-       // var headers = new Headers();
-        //headers.append('Content-Type', 'application/x-www-form-urlencoded';
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -102,7 +100,14 @@ export class SearchOverlay {
             var data = responseData.json();
             this.router.navigate(['ChatPage',{chatId: data.id}]);
             this.showCompose = false;
-
+            this.eventService.showCompose_broadcast( this.showCompose);
+            this.selectedUsersId = [];
+            this.selectedUsers = [];
+            this.users.forEach((user,index)=>{
+               if(user.selected){
+                   user.selected = false;
+               }
+            });
             //return data.users;
         })
     }

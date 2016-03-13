@@ -7,6 +7,8 @@
 import {Component, View} from "angular2/core";
 import {Http, HTTP_PROVIDERS} from "angular2/http";
 import 'rxjs/Rx';
+import {HeaderComponent} from '../../components/header/header';
+
 
 
 @Component({
@@ -15,7 +17,8 @@ import 'rxjs/Rx';
 })
 
 @View({
-    templateUrl: 'app/components/home-content/home-content.html'
+    templateUrl: 'app/components/home-content/home-content.html',
+    directives:[HeaderComponent]
 })
 
 
@@ -26,7 +29,6 @@ export class HomeContent {
     constructor(http: Http) {
         this.profile ={};
         this.http = http;
-        console.log('hi');
 
         this.profile ={};
         this.http.get("/user").map( (responseData) => {

@@ -1,4 +1,4 @@
-<header class="header-bar">
+<header class="header-bar" *ngIf="chatid">
 
     <figure class="header-background" *ngIf="chat.users?.length == 1" [ngStyle]="{'background-image':'url('+chat.users[0]?.cover+')'}"></figure>
 
@@ -10,5 +10,29 @@
     <avatar *ngIf="chat.users" [profile]="chat.users"></avatar>
 
     <h1 *ngIf="chat.users" class="header-name"> {{chat.users | nameList}}</h1>
+    <nav class="header-nav">
+        <ul class="header-nav-list">
+            <li class="header-nav-item">Chat Members</li>
+            <li class="header-nav-item" (click)="compose()">New Message</li>
+        </ul>
+    </nav>
+
+
+</header>
+
+<header class="header-bar" *ngIf="!chatid">
+
+    <figure class="header-background"  [ngStyle]="{'background-image':'url('+profile[0]?.cover+')'}"></figure>
+
+    <avatar [profile]="profile"></avatar>
+
+    <h1 class="header-name"> {{profile[0]?.firstname}} {{profile[0]?.lastname}} </h1>
+
+    <nav class="header-nav">
+        <ul class="header-nav-list">
+            <li class="header-nav-item">Profile Settings</li>
+            <li class="header-nav-item" (click)="compose()">New Message</li>
+        </ul>
+    </nav>
 
 </header>

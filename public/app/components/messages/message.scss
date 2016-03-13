@@ -4,8 +4,13 @@
     @include transform(none);
     left:auto;
     top:auto;
+    float:left;
     display: inline-block;
-    margin-right:20px;
+    margin: 10px 20px 0 0px;
+    .message-list-item.right &{
+      float:right;
+      margin:10px 0 0 20px;
+    }
   }
 
   .message-text{
@@ -16,6 +21,29 @@
     background: #fff;
     padding:25px;
     text-align: left;
+    position: relative;
     //box-shadow: 0px 0px 4px 1px #aaa;
+
+    &:after{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      left: -20px;
+      right: auto;
+      top: 0;
+      bottom: auto;
+      border: 22px solid;
+      border-color: #fff transparent transparent transparent;
+
+      .message-list-item.right & {
+        right:-20px;
+        left:auto;
+
+      }
+    }
+
+
+
   }
 }

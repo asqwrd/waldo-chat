@@ -9,18 +9,51 @@ function ChatModel() { };
 ChatModel.create = function(userId,data, callback) {
     var users = data.users;
     users.push(userId);
-    var chatRoom = {
-        id: uuid.v4(),
-        users: users,
-        type:"chat"
-    };
-    db.insert("chat::" + chatRoom.id, chatRoom, function(error, result) {
-        if(error) {
+    var chatRoom;
+
+    var query = N1qlQuery.fromString(
+        "SELECT  chats.id, chats.users " +
+        "FROM `" + config.couchbase.bucket + "` AS chats " +
+        "WHERE EVERY p IN chats.users SATISFIES p IN $1 END"
+    );
+    db.query(query, [users,users.length], function(error, result) {
+        if (error) {
+            console.log(error);
             return callback(error, null);
         }
 
-        return callback(null, chatRoom);
+
+        result.forEach(function(value,index){
+            if(value.users.length == users.length){
+                console.log(value);
+                chatRoom = {
+                    id: value.id,
+                    users: users,
+                    type:"chat"
+                };
+
+                return callback(null, chatRoom);
+
+            }
+        });
+        if(!chatRoom){
+            chatRoom = {
+                id: uuid.v4(),
+                users: users,
+                type:"chat"
+            };
+
+            db.insert("chat::" + chatRoom.id, chatRoom, function(error, result) {
+                if(error) {
+                    return callback(error, null);
+                }
+
+                return callback(null, chatRoom);
+            });
+        }
+
     });
+
 }
 
 ChatModel.getChat = function(chatId,userId, callback) {
