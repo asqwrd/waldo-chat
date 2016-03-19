@@ -11,8 +11,9 @@ import { ChatList } from '../../components/chat-list/chat-list';
 import {HeaderComponent} from '../../components/header/header';
 import {EventService} from '../../services/event-service';
 import 'rxjs/Rx';
-import {AvatarInitial,ValuesPipe} from "../../libs/pipes";
+import {AvatarInitial,ValuesPipe,SearchArrayPipe} from "../../libs/pipes";
 import {Avatar} from '../../components/avatar/avatar';
+import {PerfectScrollDirective} from '../../directives/perfect-scroll/perfect-scroll';
 
 
 
@@ -25,8 +26,8 @@ import {Avatar} from '../../components/avatar/avatar';
 
 @View({
     templateUrl: 'app/components/search/search.html',
-    directives:[NgStyle,NgFor,Avatar],
-    pipes:[AvatarInitial,ValuesPipe]
+    directives:[NgStyle,NgFor,Avatar,PerfectScrollDirective],
+    pipes:[AvatarInitial,ValuesPipe,SearchArrayPipe]
 })
 
 export class SearchOverlay {
@@ -43,6 +44,7 @@ export class SearchOverlay {
         this.users = [];
         this.router = router;
         this.eventService = eventService;
+        this.showCompose = eventService.showOverlay();
         this.selectedUsersId = [];
         this.selectedUsers = [];
         this.http = http;
@@ -57,21 +59,28 @@ export class SearchOverlay {
             console.log(JSON.stringify(error));
         });
 
-
-
-
-    }
-
-    private composeToggle(data:any){
-        this.showCompose = data;
-    }
-
-    ngOnInit() {
         this.eventService.emitter.subscribe((data) =>{
-            this.composeToggle(data);
+            this.showCompose = data
         }, (error) => {
             console.log(JSON.stringify(error));
         });
+
+
+
+
+    }
+
+    private composeToggle(){
+        if(this.showCompose == true){
+            this.showCompose = false;
+        }else{
+            this.showCompose = true;
+        }
+        this.eventService.showCompose_broadcast(this.showCompose);
+    }
+
+    ngOnInit() {
+
     }
 
     addToSelected(user,zone:NgZone){
@@ -94,13 +103,12 @@ export class SearchOverlay {
     createChatRoom(){
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
+        this.composeToggle();
 
         var data = {"users": this.selectedUsersId};
         this.http.post("/chats",JSON.stringify(data),{headers:headers}).subscribe( (responseData) => {
             var data = responseData.json();
             this.router.navigate(['ChatPage',{chatId: data.id}]);
-            this.showCompose = false;
-            this.eventService.showCompose_broadcast( this.showCompose);
             this.selectedUsersId = [];
             this.selectedUsers = [];
             this.users.forEach((user,index)=>{

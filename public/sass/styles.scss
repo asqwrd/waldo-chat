@@ -20,18 +20,22 @@ input, textarea, keygen, select, button{
   box-sizing: border-box;
   outline:none;
 }
+
+//Components
 @import 'public/app/components/chat-list/chat-list';
 @import 'public/app/components/header/header';
 @import 'public/app/components/search/search';
 @import 'public/app/components/avatar/avatar';
 @import 'public/app/components/home-content/home-content';
 @import 'public/app/components/last-message/last-message';
+
+//pages
 @import 'public/app/pages/chat-page/chat-page';
-
 @import 'public/app/pages/home/home';
+@import 'public/app/pages/login/login';
 
 
-
+//General Styles
 
 .tint{
   position:absolute;

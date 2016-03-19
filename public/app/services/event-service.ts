@@ -20,6 +20,10 @@ export class EventService {
         return this.open;
     }
 
+    public broadcast_scroll(){
+        this.emitter.emit('scroll');
+    }
+
 
     public showCompose_broadcast(data:any) {
         this.open = data;

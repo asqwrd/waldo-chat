@@ -27,6 +27,16 @@
     }
   }
 
+  .whotyping{
+    color: #888;
+    font-style: italic;
+    position: relative;
+   @include font-size(16px);
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+  }
+
   .chat-box{
     width: 100%;
     border: none;
@@ -51,18 +61,30 @@
 }
 
 .message-list{
-  height:calc(70% - 85px);
+  height:calc(70% - 89px);
   background: #e5e5e5;
   padding:25px;
   position: relative;
   overflow: hidden;
+
+  &.sending{
+    li.message-list-item:last-of-type{
+      @include transform(translate(-100%));
+      &.right{
+        @include transform(translate(100%));
+      }
+    }
+  }
 }
 
 .message-list-item{
   padding:20px 0;
+  @include transition(all .4s ease);
+  @include transform(translate(0));
 
   &.right{
     text-align:right;
+
   }
 
 }

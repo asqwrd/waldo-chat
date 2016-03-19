@@ -19,6 +19,7 @@ export class PerfectScrollDirective implements OnInit{
         Ps.initialize(this.el.nativeElement,{
             wheelSpeed: 1,
             wheelPropagation: true,
+            suppressScrollX: true
         });
     }
 

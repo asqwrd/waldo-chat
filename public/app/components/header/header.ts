@@ -56,6 +56,11 @@ export class HeaderComponent {
 
 
         //eventService.emitter.subscribe(data => this.compose(data));
+        this.eventService.emitter.subscribe((data) =>{
+            this.open = data
+        }, (error) => {
+            console.log(JSON.stringify(error));
+        });
 
 
     }

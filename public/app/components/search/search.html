@@ -1,19 +1,21 @@
 <div class="search-overlay" [class.open]="showCompose==true" (open) = "composeToggle()">
+    <figure class="close-overlay ion-android-close" (click) = "composeToggle()"></figure>
     <section class="search-content">
 
         <section class="input-wrapper">
-            <div class="selected-users">
+            <div class="selected-users" perfectScroll>
                 <div class="selected-users-list" *ngFor="#user of selectedUsers | values">
                     <avatar [profile]="user"></avatar>
+                    <h1 class="user-name">{{user.firstname}} {{user.lastname}}</h1>
                 </div>
 
-                <button (click)="createChatRoom()">Test Button</button>
             </div>
-            <input type='text' class="search-input" placeholder="Search people..."/>
+            <button class="start-chat-btn ion-arrow-right-c" (click)="createChatRoom()"></button>
+            <input type='text' class="search-input" placeholder="Search people..." [(ngModel)]="search"/>
         </section>
 
         <section class="search-results">
-            <div class="user-figure" *ngFor="#user of users" (click)="addToSelected(user)" [class.selected]="user.selected == true">
+            <div class="user-figure" *ngFor="#user of users | search:search" (click)="addToSelected(user)" [class.selected]="user.selected == true">
                 <figure class="tint"></figure>
                 <avatar [profile]="user"></avatar>
                 <h1 class="user-name">{{user.firstname}} {{user.lastname}}</h1>
