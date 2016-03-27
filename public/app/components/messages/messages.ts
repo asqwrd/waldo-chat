@@ -40,6 +40,7 @@ export class Message {
     }
 
     ngOnInit(){
+
         if(this.userId) {
             this.http.get("/user/" + this.userId).map((responseData) => {
                 var data = responseData.json();

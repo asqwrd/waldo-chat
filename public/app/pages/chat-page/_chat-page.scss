@@ -61,7 +61,7 @@
 }
 
 .message-list{
-  height:calc(70% - 89px);
+  height:calc(80% - 94px);
   background: #e5e5e5;
   padding:25px;
   position: relative;
@@ -69,23 +69,20 @@
 
   &.sending{
     li.message-list-item:last-of-type{
-      @include transform(translate(-100%));
-      &.right{
-        @include transform(translate(100%));
-      }
+     opacity:0;
     }
   }
 }
 
 .message-list-item{
-  padding:20px 0;
+  padding:20px 25px;
   @include transition(all .4s ease);
-  @include transform(translate(0));
+  opacity:1;
+  background:#fff;
+  box-shadow: 0px 0px 4px 0px #aaa;
+  margin:20px 0;
 
-  &.right{
-    text-align:right;
 
-  }
 
 }
 

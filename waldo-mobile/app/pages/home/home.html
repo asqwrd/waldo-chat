@@ -1,0 +1,8 @@
+<ion-navbar waldo *navbar class="chat-list-header">
+        <h1 class="header-logo">Messages</h1>
+        <avatar [profile]="profile" class="avatar-container"></avatar>
+</ion-navbar>
+
+<ion-content class="home">
+   <chat-list [chats]="chats" [access_token]="access_token"></chat-list>
+</ion-content>

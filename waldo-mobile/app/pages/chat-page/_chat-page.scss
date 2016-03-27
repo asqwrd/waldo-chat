@@ -1,0 +1,89 @@
+@import '../../components/messages/message';
+
+.send-form{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background: #e5e5e5;
+  padding: 10px 25px;
+  text-align: right;
+
+  .chat-box-wrapper{
+    width: calc(85% - 35px);
+    position: relative;
+    display: inline-block;
+    &:after{
+      content: ' ';
+      position: absolute;
+      width: 0;
+      height: 0;
+      right:-20px;
+      left:auto;
+      top: 0;
+      bottom: auto;
+      border: 22px solid;
+      border-color: #fff transparent transparent transparent;
+
+    }
+  }
+
+  .whotyping{
+    color: #888;
+    font-style: italic;
+    position: relative;
+   @include font-size(16px);
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+  }
+
+  .chat-box{
+    width: 100%;
+    border: none;
+    background: #fff;
+    padding: 25px;
+    position: relative;
+
+  }
+  .send-button{
+    background:transparent;
+    border:none;
+    border-radius: 100%;
+    display: inline-block;
+    margin-left:20px;
+    padding: 0;
+    height: auto;
+    .avatar{
+      @include transform(none);
+      left:auto;
+      top:0px;
+    }
+  }
+}
+
+.message-list{
+  height: calc(100% - 94px);
+  background: #e5e5e5;
+  padding: 25px;
+  position: relative;
+  overflow: auto;
+
+  &.sending{
+    li.message-list-item:last-of-type{
+     opacity:0;
+    }
+  }
+}
+
+.message-list-item{
+  padding:20px 25px;
+  @include transition(all .4s ease);
+  opacity:1;
+  background:#fff;
+  box-shadow: 0px 0px 4px 0px #aaa;
+  margin:20px 0;
+
+
+
+}
+

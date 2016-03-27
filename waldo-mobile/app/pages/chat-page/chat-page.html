@@ -1,0 +1,21 @@
+
+<ion-navbar waldo *navbar class="chat-list-header">
+    <h1 *ngIf="chat.users" class="header-logo">{{chat.users | nameList}}</h1>
+    <avatar [profile]="chat.users" class="avatar-container"></avatar>
+</ion-navbar>
+
+<ion-content class="home">
+    <ul class="message-list" #messagelist [class.sending]="sending == true">
+        <li class="message-list-item" *ngFor="#message of messages | slice:20 " [class.right] = "profile[0]?.uid == message.userId"><message [message]="message.text" [userId]="message.userId" [access_token]="access_token"></message></li>
+    </ul>
+
+    <form action="" class="send-form">
+        <span class="whotyping">{{whotyping}}</span>
+        <div class="chat-box-wrapper">
+            <input placeholder="Type your message..." class="chat-box" [(ngModel)]="chatBox" (input)="typing($event)" autocomplete="off" />
+        </div>
+        <button class="send-button" (click)="send(chatBox,profile[0].uid,messagelist)">
+            <avatar [profile]="profile"></avatar>
+        </button>
+    </form>
+</ion-content>

@@ -64,7 +64,7 @@ input, textarea, keygen, select, button {
   overflow: hidden;
   padding: 0 10px;
   color: #fff;
-  background: #ccc;
+  background: #9d0b0e;
   box-shadow: -3px 0px 4px 1px #000;
   z-index: 1; }
   .chat-list-header .header-logo {
@@ -181,33 +181,40 @@ input, textarea, keygen, select, button {
     font-size: 1.125rem; }
 
 .header-bar {
-  height: 30%;
+  height: 20%;
   padding: 30px;
   border-bottom: 1px solid #ccc;
-  position: relative; }
+  position: relative;
+  z-index: 1; }
   .header-bar .nav-icons {
     position: absolute;
     top: 0;
     right: 0; }
   .header-bar .header-name {
     position: absolute;
-    bottom: 15%;
     margin: 0;
     color: #fff;
     font-weight: 300;
     font-size: 25px;
-    font-size: 1.5625rem; }
+    font-size: 1.5625rem;
+    top: 50%;
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%); }
   .header-bar .avatar {
     left: auto;
     position: relative;
     width: 80px;
     height: 80px;
     top: 50%;
-    -moz-transform: translateY(-50%);
-    -o-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
+    left: 50%;
+    -moz-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     display: inline-block;
     vertical-align: middle; }
   .header-bar .header-background {
@@ -286,12 +293,17 @@ input, textarea, keygen, select, button {
 
 .header-nav {
   position: absolute;
-  bottom: 15%;
+  top: 50%;
+  -moz-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
   right: 0; }
   .header-nav .header-nav-list {
     list-style: none; }
     .header-nav .header-nav-list .header-nav-item {
-      display: inline-block;
+      display: block;
       text-transform: uppercase;
       color: #fff;
       font-weight: 600;
@@ -518,7 +530,7 @@ input, textarea, keygen, select, button {
       border-radius: 0; }
 
 .home-content {
-  height: 70%;
+  height: 80%;
   text-align: center; }
   .home-content .logo {
     width: 100px;
@@ -551,35 +563,16 @@ input, textarea, keygen, select, button {
     transform: none;
     left: auto;
     top: auto;
-    float: left;
-    display: inline-block;
+    display: block;
     margin: 10px 20px 0 0px; }
-    .message-list-item.right .message-component .avatar {
-      float: right;
-      margin: 10px 0 0 20px; }
   .message-component .message-text {
-    display: inline-block;
-    width: calc(50% - 35px);
-    max-width: 250px;
-    vertical-align: middle;
-    background: #fff;
-    padding: 25px;
+    display: block;
     text-align: left;
-    position: relative; }
-    .message-component .message-text:after {
-      content: ' ';
-      position: absolute;
-      width: 0;
-      height: 0;
-      left: -20px;
-      right: auto;
-      top: 0;
-      bottom: auto;
-      border: 22px solid;
-      border-color: #fff transparent transparent transparent; }
-      .message-list-item.right .message-component .message-text:after {
-        right: -20px;
-        left: auto; }
+    position: relative;
+    margin-bottom: 30px; }
+  .message-component .message-user-name {
+    margin-bottom: 20px;
+    color: #888; }
 
 .send-form {
   position: absolute;
@@ -635,37 +628,24 @@ input, textarea, keygen, select, button {
       top: 10px; }
 
 .message-list {
-  height: calc(70% - 89px);
+  height: calc(80% - 94px);
   background: #e5e5e5;
   padding: 25px;
   position: relative;
   overflow: hidden; }
   .message-list.sending li.message-list-item:last-of-type {
-    -moz-transform: translate(-100%);
-    -o-transform: translate(-100%);
-    -ms-transform: translate(-100%);
-    -webkit-transform: translate(-100%);
-    transform: translate(-100%); }
-    .message-list.sending li.message-list-item:last-of-type.right {
-      -moz-transform: translate(100%);
-      -o-transform: translate(100%);
-      -ms-transform: translate(100%);
-      -webkit-transform: translate(100%);
-      transform: translate(100%); }
+    opacity: 0; }
 
 .message-list-item {
-  padding: 20px 0;
+  padding: 20px 25px;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
   -webkit-transition: all 0.4s ease;
   transition: all 0.4s ease;
-  -moz-transform: translate(0);
-  -o-transform: translate(0);
-  -ms-transform: translate(0);
-  -webkit-transform: translate(0);
-  transform: translate(0); }
-  .message-list-item.right {
-    text-align: right; }
+  opacity: 1;
+  background: #fff;
+  box-shadow: 0px 0px 4px 0px #aaa;
+  margin: 20px 0; }
 
 .side-bar {
   position: absolute;
@@ -681,7 +661,8 @@ input, textarea, keygen, select, button {
   float: right;
   height: 100%;
   border-right: 1px solid #ccc;
-  overflow: hidden; }
+  overflow: hidden;
+  background-color: #e5e5e5; }
 
 .login-content {
   height: 100%;

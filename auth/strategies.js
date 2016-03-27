@@ -3,15 +3,19 @@
  */
 var passport = require("passport");
 var FacebookStrategy = require('passport-facebook').Strategy;
+var FacebookTokenStrategy = require('passport-facebook-token');
 var config = require("../config");
 var AccountModel = require("../models/accountmodel");
+global.access_token = '';
 
-passport.use(new FacebookStrategy({
+passport.use(new FacebookTokenStrategy({
     clientID: config.facebook.client_id,
     clientSecret: config.facebook.client_secret,
     callbackURL: config.facebook.callback_url,
     profileFields: config.facebook.profileFields
 }, function(accessToken, refreshToken, profile, done) {
+    global.access_token = accessToken;
+    //console.log(profile);
     AccountModel.facebookFindOrCreate(profile, function(error, user) {
         if(error) {
             return done(error);
@@ -19,3 +23,7 @@ passport.use(new FacebookStrategy({
         done(null, user);
     });
 }));
+
+
+
+

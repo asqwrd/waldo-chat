@@ -66,7 +66,6 @@ export class HeaderComponent {
     }
 
     ngOnInit(http:Http){
-
         this.chat= {};
         if(this.chatid) {
             this.http.get("/chat/" + this.chatid).map((responseData) => {

@@ -66,7 +66,7 @@ export class ChatPage {
                 callback : (m)=> {
                     this.messages = m[0];
                     setTimeout(() =>{
-                        this.list.nativeElement.scrollTop = this.list.nativeElement.scrollHeight + 106;
+                        this.list.nativeElement.scrollTop = this.list.nativeElement.scrollHeight;
                         Ps.update(this.list.nativeElement);
                     },1000);
                 }
@@ -93,9 +93,9 @@ export class ChatPage {
                         }
                     });
                     setTimeout(() =>{
-                        this.list.nativeElement.scrollTop = this.list.nativeElement.scrollHeight + 106;
-                        Ps.update(this.list.nativeElement);
+                        this.list.nativeElement.scrollTop = this.list.nativeElement.scrollHeight;
                         this.sending=false;
+                        Ps.update(this.list.nativeElement);
                     },1000);
                 }
             });

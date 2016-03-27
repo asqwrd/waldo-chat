@@ -16,7 +16,7 @@ var server = require("http").Server(app);
 //
 // app.set("view engine", "jade");
 
-app.use(session({ secret: "wole" }));
+app.use(session({ secret: "wole" , saveUninitialized:true, resave:true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -44,7 +44,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.use(cookieParser());
+//app.use(cookieParser());
 
 var routes = require("./routes/routes.js")(app);
 var ChatModel = require("./models/chatmodel.js");

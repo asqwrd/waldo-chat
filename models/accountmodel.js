@@ -15,19 +15,25 @@ AccountModel.facebookFindOrCreate = function(profile, callback) {
         "JOIN `" + config.couchbase.bucket + "` AS users ON KEYS (\"user::\" || facebooklogin.uid) " +
         "WHERE META(facebooklogin).id = $1"
     );
+    console.log("facebook::" + profile.id);
     db.query(query, ["facebook::" + profile.id], function(error, result) {
         if(error) {
+            console.log(error);
             return callback(error, null);
+
         }
+        console.log(result);
+        //console.log(profile);
         if(result.length <= 0) {
+            console.log('hi');
             var userDocument = {
                 "type": "user",
                 "uid": uuid.v4(),
-                "firstname": profile.name.givenName,
-                "lastname": profile.name.familyName,
-                "email": profile.emails[0].value,
-                "photos":profile.photos[0].value,
-                "cover":profile._json.cover.source
+                "firstname": profile.first_name,
+                "lastname": profile.last_name,
+                "email": profile.emails,
+                "photos":profile.picture.data.url,
+                "cover":profile.cover.source
             };
             var referenceDocument = {
                 "type": "facebook",
@@ -59,7 +65,6 @@ AccountModel.findByUserId = function(userId, callback) {
     );
     db.query(query, ["user::" + userId], function(error, result) {
         if(error) {
-            console.log(error);
             return callback(error, null);
         }
         callback(null, result);

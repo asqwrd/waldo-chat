@@ -7,6 +7,7 @@
         "client_id": "183074092063705",
         "client_secret": "b77d92aa67b056a9707fc23a2337ebc5",
         "callback_url": "http://localhost:3000/facebook/callback",
-        "profileFields": ["id", "birthday", "email", "first_name", "gender", "last_name","picture.type(large)","cover"]
+        "profileFields": ["id", "birthday", "email", "first_name", "gender", "last_name","picture.type(large)","cover"],
+        "access_token":"f5334781197993e35a1065a3772954b4"
     }
 }

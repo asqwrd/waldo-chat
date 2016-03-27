@@ -1,0 +1,22 @@
+
+<section class="chat-list-wrapper">
+    <ul class="chat-list">
+        <li class="chat-list-item" *ngFor="#chat of chats" (click)="startChat(chat.id,chat)">
+            <figure class="tint"></figure>
+            <figure class="cover-background" [class.one] = "chat.users?.length == 1" [class.two] ="chat.users?.length ==2" [class.three]="chat.users?.length == 3" [class.four]="chat.users?.length >= 4">
+                <div class="cover-img" *ngFor="#user of chat?.users" [ngStyle]="{'background-image':'url('+user.cover+')'}"></div>
+            </figure>
+            <div class="chat-details-container">
+                <div class="avatar-container">
+                    <avatar [profile]="chat.users"></avatar>
+                </div>
+                <article class="chat-details">
+                    <h1 class="details-name">
+                       {{chat.users | nameList}}
+                    </h1>
+                    <last-message [chatId] = "chat.id"></last-message>
+                </article>
+            </div>
+        </li>
+    </ul>
+</section>

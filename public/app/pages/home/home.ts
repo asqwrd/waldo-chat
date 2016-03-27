@@ -2,7 +2,7 @@
  * Created by asqwrd on 2/25/2016.
  */
 
-import {Component, View} from "angular2/core";
+import {Component, View,OnInit} from "angular2/core";
 import {Http, HTTP_PROVIDERS} from "angular2/http";
 import {NgStyle,NgFor} from 'angular2/common';
 import {ROUTER_DIRECTIVES, RouteConfig,RouterLink,Router} from 'angular2/router';
@@ -31,7 +31,7 @@ import 'rxjs/Rx';
 
 @RouteConfig([
     { path: '/:chatId', as: 'ChatPage', component: ChatPage },
-    { path: '/', as: 'HomeContent', component: HomeContent},
+    { path: '/', as: 'HomeContent', component: HomeContent, useAsDefault: true},
 
 ])
 
@@ -49,12 +49,12 @@ export class HomePage {
         }).subscribe((success) => {
             var data = success;
             this.profile = data;
+            console.log(this.profile);
         }, (error) => {
             console.log(error);
         });
 
     }
-
 
 
 }

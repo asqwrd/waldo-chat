@@ -23,24 +23,27 @@ import {HeaderComponent} from '../../components/header/header';
 
 
 export class HomeContent {
-    profile:Object;
+    profile:Array<Object>;
     http:Http;
 
     constructor(http: Http) {
-        this.profile ={};
+        this.profile =[];
         this.http = http;
 
-        this.profile ={};
         this.http.get("/user").map( (responseData) => {
             var data = responseData.json();
             this.profile = data.profile;
             return data.profile;
         }).subscribe((success) => {
             var data = success;
-            this.profile = data;
+            this.profile.push(data);
         }, (error) => {
             console.log(JSON.stringify(error));
         });
+
+    }
+
+    ngOnInit(){
 
     }
 

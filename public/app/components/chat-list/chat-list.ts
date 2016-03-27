@@ -51,6 +51,7 @@ export class ChatList {
             this.profile = data;
             this.http.get("/chats").map( (responseData) => {
                 var data2 = responseData.json();
+                this.chats = data2;
                 return data2;
             }).subscribe((success) => {
                 var data3 = success;
