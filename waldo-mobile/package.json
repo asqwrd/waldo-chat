@@ -28,6 +28,7 @@
   "description": "waldo-ts: An Ionic project",
   "cordovaPlugins": [],
   "cordovaPlatforms": [
-    "android"
+    "android",
+    "ios"
   ]
 }

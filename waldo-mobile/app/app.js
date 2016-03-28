@@ -22,6 +22,7 @@ var MyApp = (function () {
     MyApp = __decorate([
         ionic_angular_1.App({
             template: '<ion-nav [root]="rootPage"></ion-nav>',
+            //providers: [ApiService],
             config: {},
         }), 
         __metadata('design:paramtypes', [ionic_angular_1.Platform])

@@ -59,7 +59,7 @@ export class ChatPage {
         });
         this.pubnub.history({
             channel:this.params.get('chatId'),
-            count : 100,
+            count : 20,
             callback : (m)=> {
                 this.messages = m[0];
                 setTimeout(() =>{

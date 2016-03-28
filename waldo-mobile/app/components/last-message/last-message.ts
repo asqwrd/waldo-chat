@@ -4,13 +4,14 @@
 import {Component,Input,NgZone} from "angular2/core";
 import {Http, HTTP_PROVIDERS} from "angular2/http";
 import 'rxjs/Rx';
+import {ApiService} from "../../services/api-service";
 
 
 declare var PUBNUB:any;
 
 @Component({
     selector: 'last-message',
-    viewProviders: [HTTP_PROVIDERS],
+    providers: [ApiService],
     templateUrl: 'build/components/last-message/last-message.html'
 
 })
@@ -26,13 +27,15 @@ export class LastMessage {
     lastUser:Object;
     http:Http;
     zone:NgZone;
+    domain:ApiService;
 
 
-    constructor(http: Http,zone:NgZone) {
+    constructor(http: Http,zone:NgZone,domain:ApiService) {
         this.lastMessage = "";
         this.lastUser ={};
         this.http = http;
         this.zone = zone;
+        this.domain = domain;
 
     }
 
@@ -48,7 +51,7 @@ export class LastMessage {
             callback: (m)=> {
                 if (m[0][m[0].length - 1]) {
                     this.lastMessage = m[0][m[0].length - 1].text;
-                    this.http.get("//localhost:3000/user/" + m[0][m[0].length - 1].userId).map((responseData) => {
+                    this.http.get(this.domain.getApiDomain() + "/user/" + m[0][m[0].length - 1].userId).map((responseData) => {
                         var data2 = responseData.json();
                             this.lastUser = data2[0];
                         return data2;
@@ -65,7 +68,19 @@ export class LastMessage {
 
         this.pubnub.subscribe({
             channel  : this.chatId,
-            callback : (text) =>{ this.lastMessage = text.text; }
+            callback : (text) =>{
+                this.lastMessage = text.text;
+                this.http.get(this.domain.getApiDomain() + "/user/" + text.userId).map((responseData) => {
+                    var data2 = responseData.json();
+                    this.lastUser = data2[0];
+                    return data2;
+                }).subscribe((success) => {
+                    var data = success;
+                    this.lastUser = data[0];
+                }, (error) => {
+                    console.log(error);
+                });
+            }
         });
     }
 

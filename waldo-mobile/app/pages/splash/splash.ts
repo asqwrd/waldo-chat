@@ -6,11 +6,13 @@ import {Component,NgZone} from "angular2/core";
 import {Http, HTTP_PROVIDERS,Headers} from "angular2/http";
 import {HomePage} from "../home/home";
 import {LoginPage} from "../login/login";
+import {ApiService} from "../../services/api-service"
 
 declare var openFB:any;
 
 @Page({
     templateUrl: 'build/pages/splash/splash.html',
+    providers:[ApiService]
 })
 
 
@@ -21,8 +23,9 @@ export class SplashPage {
     chats:Array<Object>;
     fb:any;
     zone:NgZone;
+    domain:ApiService;
 
-    constructor(nav:NavController,navParams:NavParams,http:Http,zone:NgZone) {
+    constructor(nav:NavController,navParams:NavParams,http:Http,zone:NgZone,domain:ApiService) {
         this.nav = nav;
         this.http = http;
         this.profile = [];
@@ -30,6 +33,8 @@ export class SplashPage {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         this.zone = zone;
+        this.domain = domain;
+
 
 
         openFB.getLoginStatus((response) => {
@@ -46,17 +51,18 @@ export class SplashPage {
                     success: (data) => {
                         var profile = {profile:data};
                         this.zone.run(()=>{
-                            this.http.post('http://192.168.1.223:3000/login/facebook',JSON.stringify(profile),{headers:headers}).subscribe( (responseData) => {
+                            this.http.post(this.domain.getApiDomain() + '/login/facebook',JSON.stringify(profile),{headers:headers}).subscribe( (responseData) => {
                                 this.profile = [responseData.json().profile];
-                                this.http.get("http://192.168.1.223:3000/chats/" + this.profile[0].uid).subscribe( (responseData) => {
+                                this.http.get(this.domain.getApiDomain() + "/chats/" + this.profile[0].uid).subscribe( (responseData) => {
                                     var data2 = responseData.json();
                                     this.chats = data2;
-                                    console.log(this.chats);
-                                    this.nav.setRoot(HomePage, {
-                                        profile: this.profile,
-                                        chats:this.chats,
-                                        access_token:access_token
-                                    });
+                                    setTimeout(() =>{
+                                        this.nav.setRoot(HomePage, {
+                                            profile: this.profile,
+                                            chats:this.chats,
+                                            access_token:access_token
+                                        });
+                                    },2000)
                                 });
                             });
                         });

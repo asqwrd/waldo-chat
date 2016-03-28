@@ -39,32 +39,21 @@ var appRouter = function(app) {
 
 
     app.get("/user", function(req, res, next) {
-        if(!req.user && !req.query.access_token) {
-            res.writeHead(404, {
-                'Location': '/'
-            });
-            return res.end();
-        }else if(req.query.access_token == global.access_token){
-
-            AccountModel.findByUserId(req.query.id, function(error, result) {
-                res.send({"profile": result});
-
-            });
-        }else {
-            AccountModel.findByUserId(req.user, function(error, result) {
-                res.send({"profile": result});
-
-            });
-        }
-    });
-
-    app.get("/users", function(req, res, next) {
         if(!req.user) {
             res.writeHead(404, {
                 'Location': '/'
             });
             return res.end();
         }
+        AccountModel.findByUserId(req.user, function(error, result) {
+            res.send({"profile": result});
+
+        });
+
+    });
+
+    app.get("/users", function(req, res, next) {
+
         AccountModel.findAll(req.user,function(error, result) {
             res.send({"users": result});
 
@@ -91,9 +80,7 @@ var appRouter = function(app) {
     });
 
     app.get("/chat/:id", function(req, res, next) {
-        if(!req.user) {
-            return res.redirect("/#/");
-        }
+
         ChatModel.getChat(req.params.id,req.user, function(error, result) {
             res.send(result);
 
@@ -101,23 +88,11 @@ var appRouter = function(app) {
     });
 
 
-    app.post("/chats", function(req, res, next) {
-        if(!req.user) {
-            return res.redirect("/#/");
-        }
-        ChatModel.create(req.user,req.body, function(error, result) {
-            res.send(result);
-
-        });
-    });
-
 
     //profile routes
 
     app.post("/secure", function(req, res, next) {
-        if(!req.user) {
-            return res.redirect("/#/");
-        }
+
         AccountModel.updateUser(req.user, req.body, function(error, result) {
             if(!error) {
                 res.redirect("/secure");

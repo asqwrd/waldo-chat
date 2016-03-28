@@ -15,8 +15,9 @@ var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
 var home_1 = require("../home/home");
 var login_1 = require("../login/login");
+var api_service_1 = require("../../services/api-service");
 var SplashPage = (function () {
-    function SplashPage(nav, navParams, http, zone) {
+    function SplashPage(nav, navParams, http, zone, domain) {
         var _this = this;
         this.nav = nav;
         this.http = http;
@@ -25,6 +26,7 @@ var SplashPage = (function () {
         var headers = new http_1.Headers();
         headers.append('Content-Type', 'application/json');
         this.zone = zone;
+        this.domain = domain;
         openFB.getLoginStatus(function (response) {
             if (response.status === 'connected') {
                 // the user is logged in and has authenticated your
@@ -39,17 +41,18 @@ var SplashPage = (function () {
                     success: function (data) {
                         var profile = { profile: data };
                         _this.zone.run(function () {
-                            _this.http.post('http://192.168.1.223:3000/login/facebook', JSON.stringify(profile), { headers: headers }).subscribe(function (responseData) {
+                            _this.http.post(_this.domain.getApiDomain() + '/login/facebook', JSON.stringify(profile), { headers: headers }).subscribe(function (responseData) {
                                 _this.profile = [responseData.json().profile];
-                                _this.http.get("http://192.168.1.223:3000/chats/" + _this.profile[0].uid).subscribe(function (responseData) {
+                                _this.http.get(_this.domain.getApiDomain() + "/chats/" + _this.profile[0].uid).subscribe(function (responseData) {
                                     var data2 = responseData.json();
                                     _this.chats = data2;
-                                    console.log(_this.chats);
-                                    _this.nav.setRoot(home_1.HomePage, {
-                                        profile: _this.profile,
-                                        chats: _this.chats,
-                                        access_token: access_token
-                                    });
+                                    setTimeout(function () {
+                                        _this.nav.setRoot(home_1.HomePage, {
+                                            profile: _this.profile,
+                                            chats: _this.chats,
+                                            access_token: access_token
+                                        });
+                                    }, 2000);
                                 });
                             });
                         });
@@ -76,8 +79,9 @@ var SplashPage = (function () {
     SplashPage = __decorate([
         ionic_angular_1.Page({
             templateUrl: 'build/pages/splash/splash.html',
+            providers: [api_service_1.ApiService]
         }), 
-        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, http_1.Http, core_1.NgZone])
+        __metadata('design:paramtypes', [ionic_angular_1.NavController, ionic_angular_1.NavParams, http_1.Http, core_1.NgZone, api_service_1.ApiService])
     ], SplashPage);
     return SplashPage;
 })();

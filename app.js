@@ -47,8 +47,6 @@ app.use(bodyParser.json());
 //app.use(cookieParser());
 
 var routes = require("./routes/routes.js")(app);
-var ChatModel = require("./models/chatmodel.js");
-var authstrategies = require("./auth/strategies.js");
 
 
 

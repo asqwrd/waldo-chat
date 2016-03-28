@@ -33,7 +33,7 @@ var ChatPage = (function () {
         });
         this.pubnub.history({
             channel: this.params.get('chatId'),
-            count: 100,
+            count: 20,
             callback: function (m) {
                 _this.messages = m[0];
                 setTimeout(function () {

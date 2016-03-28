@@ -7,6 +7,7 @@
 
 @import 'mixins';
 @import '../../node_modules/ionicons/dist/scss/ionicons.scss';
+@import 'loaders/loaders';
 
 input, textarea, keygen, select, button{
   font-family: 'Lato', sans-serif;
@@ -41,6 +42,7 @@ input, textarea, keygen, select, button{
 @import "../pages/home/home";
 @import "../pages/chat-page/chat-page";
 @import "../pages/login/login";
+@import "../pages/splash/splash";
 // App Shared Variables
 // --------------------------------------------------
 // Shared Sass variables go in the app.varialbes.scss file

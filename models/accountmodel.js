@@ -15,14 +15,13 @@ AccountModel.facebookFindOrCreate = function(profile, callback) {
         "JOIN `" + config.couchbase.bucket + "` AS users ON KEYS (\"user::\" || facebooklogin.uid) " +
         "WHERE META(facebooklogin).id = $1"
     );
-    console.log("facebook::" + profile.id);
     db.query(query, ["facebook::" + profile.id], function(error, result) {
         if(error) {
             console.log(error);
             return callback(error, null);
 
         }
-        console.log(result);
+        //console.log(result);
         //console.log(profile);
         if(result.length <= 0) {
             console.log('hi');

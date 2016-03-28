@@ -29,3 +29,20 @@
 // App iOS Only Sass
 // --------------------------------------------------
 // CSS that should only apply to the iOS app
+
+.toolbar{
+  min-height:5.6rem;
+}
+
+.chat-list-header {
+  .header-logo {
+    width: calc(100% - 40px);
+    text-align: center;
+  }
+  .avatar-container {
+    width: 35px;
+  }
+  .back-button-text{
+    display:none;
+  }
+}

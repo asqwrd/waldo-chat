@@ -6,7 +6,7 @@
 
 <ion-content class="home">
     <ul class="message-list" #messagelist [class.sending]="sending == true">
-        <li class="message-list-item" *ngFor="#message of messages | slice:20 " [class.right] = "profile[0]?.uid == message.userId"><message [message]="message.text" [userId]="message.userId" [access_token]="access_token"></message></li>
+        <li class="message-list-item" *ngFor="#message of messages" [class.right] = "profile[0]?.uid == message.userId"><message [message]="message.text" [userId]="message.userId" [access_token]="access_token"></message></li>
     </ul>
 
     <form action="" class="send-form">

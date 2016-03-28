@@ -13,12 +13,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
 require('rxjs/Rx');
+var api_service_1 = require("../../services/api-service");
 var LastMessage = (function () {
-    function LastMessage(http, zone) {
+    function LastMessage(http, zone, domain) {
         this.lastMessage = "";
         this.lastUser = {};
         this.http = http;
         this.zone = zone;
+        this.domain = domain;
     }
     LastMessage.prototype.ngOnInit = function () {
         var _this = this;
@@ -32,7 +34,7 @@ var LastMessage = (function () {
             callback: function (m) {
                 if (m[0][m[0].length - 1]) {
                     _this.lastMessage = m[0][m[0].length - 1].text;
-                    _this.http.get("//localhost:3000/user/" + m[0][m[0].length - 1].userId).map(function (responseData) {
+                    _this.http.get(_this.domain.getApiDomain() + "/user/" + m[0][m[0].length - 1].userId).map(function (responseData) {
                         var data2 = responseData.json();
                         _this.lastUser = data2[0];
                         return data2;
@@ -47,7 +49,19 @@ var LastMessage = (function () {
         });
         this.pubnub.subscribe({
             channel: this.chatId,
-            callback: function (text) { _this.lastMessage = text.text; }
+            callback: function (text) {
+                _this.lastMessage = text.text;
+                _this.http.get(_this.domain.getApiDomain() + "/user/" + text.userId).map(function (responseData) {
+                    var data2 = responseData.json();
+                    _this.lastUser = data2[0];
+                    return data2;
+                }).subscribe(function (success) {
+                    var data = success;
+                    _this.lastUser = data[0];
+                }, function (error) {
+                    console.log(error);
+                });
+            }
         });
     };
     __decorate([
@@ -61,10 +75,10 @@ var LastMessage = (function () {
     LastMessage = __decorate([
         core_1.Component({
             selector: 'last-message',
-            viewProviders: [http_1.HTTP_PROVIDERS],
+            providers: [api_service_1.ApiService],
             templateUrl: 'build/components/last-message/last-message.html'
         }), 
-        __metadata('design:paramtypes', [http_1.Http, core_1.NgZone])
+        __metadata('design:paramtypes', [http_1.Http, core_1.NgZone, api_service_1.ApiService])
     ], LastMessage);
     return LastMessage;
 })();

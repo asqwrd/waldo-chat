@@ -6,6 +6,7 @@ import {Component,Input} from "angular2/core";
 import {Http, HTTP_PROVIDERS} from "angular2/http";
 import {AvatarInitial} from "../../libs/pipes";
 import {Avatar} from "../../components/avatar/avatar";
+import {ApiService} from "../../services/api-service";
 
 import 'rxjs/Rx';
 
@@ -14,7 +15,7 @@ declare var PUBNUB:any;
 
 @Component({
     selector: 'message',
-    viewProviders: [HTTP_PROVIDERS],
+    providers: [ApiService],
     templateUrl: 'build/components/messages/messages.html',
     pipes:[AvatarInitial],
     directives:[Avatar]
@@ -30,19 +31,21 @@ export class Message {
     @Input() access_token: any;
     user:Object;
     http:Http;
+    domain:ApiService;
 
 
-    constructor(http: Http) {
+    constructor(http: Http,domain:ApiService) {
         //this.message = "";
         this.user ={};
         this.http = http;
+        this.domain = domain;
 
     }
 
     ngOnInit(){
 
         if(this.userId) {
-            this.http.get("//localhost:3000/user/" + this.userId + "?access_token="+this.access_token).map((responseData) => {
+            this.http.get(this.domain.getApiDomain() + "/user/" + this.userId).map((responseData) => {
                 var data = responseData.json();
                 this.user = data;
                 return data;

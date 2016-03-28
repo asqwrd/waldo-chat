@@ -14,17 +14,19 @@ var core_1 = require("angular2/core");
 var http_1 = require("angular2/http");
 var pipes_1 = require("../../libs/pipes");
 var avatar_1 = require("../../components/avatar/avatar");
+var api_service_1 = require("../../services/api-service");
 require('rxjs/Rx');
 var Message = (function () {
-    function Message(http) {
+    function Message(http, domain) {
         //this.message = "";
         this.user = {};
         this.http = http;
+        this.domain = domain;
     }
     Message.prototype.ngOnInit = function () {
         var _this = this;
         if (this.userId) {
-            this.http.get("//localhost:3000/user/" + this.userId + "?access_token=" + this.access_token).map(function (responseData) {
+            this.http.get(this.domain.getApiDomain() + "/user/" + this.userId).map(function (responseData) {
                 var data = responseData.json();
                 _this.user = data;
                 return data;
@@ -49,12 +51,12 @@ var Message = (function () {
     Message = __decorate([
         core_1.Component({
             selector: 'message',
-            viewProviders: [http_1.HTTP_PROVIDERS],
+            providers: [api_service_1.ApiService],
             templateUrl: 'build/components/messages/messages.html',
             pipes: [pipes_1.AvatarInitial],
             directives: [avatar_1.Avatar]
         }), 
-        __metadata('design:paramtypes', [http_1.Http])
+        __metadata('design:paramtypes', [http_1.Http, api_service_1.ApiService])
     ], Message);
     return Message;
 })();
