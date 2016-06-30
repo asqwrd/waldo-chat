@@ -6,12 +6,20 @@ import {
   REMOVE_USER,
   ADD_TYPING_USER,
   REMOVE_TYPING_USER,
+  SET_LANG,
 } from '../constants';
 
 export function setCurrentUserID(userID) {
   return {
     type: SET_CURRENT_USERID,
     payload: userID,
+  };
+}
+
+export function setLanguage(lng) {
+  return {
+    type: SET_LANG,
+    payload: lng,
   };
 }
 
