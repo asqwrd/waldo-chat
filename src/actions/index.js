@@ -7,6 +7,7 @@ import {
   ADD_TYPING_USER,
   REMOVE_TYPING_USER,
   SET_LANG,
+  TRANSLATE,
 } from '../constants';
 
 export function setCurrentUserID(userID) {
@@ -37,6 +38,13 @@ export function addHistory(messages, timestamp) {
       messages,
       timestamp,
     },
+  };
+}
+
+export function translate(message) {
+  return {
+    type: TRANSLATE,
+    payload:message
   };
 }
 

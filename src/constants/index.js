@@ -7,3 +7,4 @@ export const REMOVE_USER = 'App/REMOVE_USER';
 export const ADD_TYPING_USER = 'App/ADD_TYPING_USER';
 export const REMOVE_TYPING_USER = 'App/REMOVE_TYPING_USER';
 export const SET_LANG = 'App/SET_LANG';
+export const TRANSLATE = 'App/TRANSLATE';
