@@ -18,18 +18,22 @@ class ChatHistory extends React.Component {
       if (!this.scrollAtBottom) {
         const numMessages = messageList.childNodes.length;
         this.topMessage = numMessages === 0 ? null : messageList.childNodes[0];
+      }else {
+        setTimeout(()=> {
+          this.scrollToBottom();
+        }, 500);
       }
     }
   }
 
   componentDidUpdate() {
-    if (this.historyChanged) {
-      if (this.scrollAtBottom) {
+    if (this.historyChanged && this.scrollAtBottom) {
+      //setTimeout( ()=>{
         this.scrollToBottom();
-      }
-      if (this.topMessage) {
+     // },300);
+     /* if (this.topMessage) {
         ReactDOM.findDOMNode(this.topMessage).scrollIntoView();
-      }
+      }*/
     }
   }
 
@@ -42,7 +46,7 @@ class ChatHistory extends React.Component {
   };
 
   render() {
-    const { props, onScroll } = this;
+    const { props, onScroll,translate } = this;
     return (
         <div className="message-content" ref="messageList" onScroll={ onScroll }>
           <ul className="message-list">
@@ -60,7 +64,7 @@ class ChatHistory extends React.Component {
                     <div className="tint"><img src={ imgURL } alt={ messageObj.Who } className="circle" /></div>
                     <span className="title">Anonymous robot #{ messageObj.Who }</span>
                     <p className="message-text">
-                      <span>{ messageObj.What }</span>
+                      <span>{ translate(messageObj.What) }</span>
                     </p>
                     <span className="message-date">{ messageDateTime }</span>
                   </li>
@@ -79,6 +83,11 @@ class ChatHistory extends React.Component {
     const height = messageList.clientHeight;
     const maxScrollTop = scrollHeight - height;
     ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+  }
+
+  translate = (str) =>{
+    const { refs, props } = this;
+    return str + ' - ' + props.lng;
   }
 }
 

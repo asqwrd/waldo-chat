@@ -12,6 +12,7 @@ import {
     removeUser,
     addTypingUser,
     removeTypingUser,
+    setLanguage,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -20,6 +21,7 @@ function mapStateToProps(state) {
     userID: state.app.get('userID'),
     lastMessageTimestamp: state.app.get('lastMessageTimestamp'),
     users: state.app.get('users').toJS(),
+    lng: state.app.get('lng'),
     usersTyping: state.app.get('usersTyping').toJS(),
   };
 }
@@ -33,6 +35,7 @@ function mapDispatchToProps(dispatch) {
     removeUser: (userID) => dispatch(removeUser(userID)),
     addTypingUser: (userID) => dispatch(addTypingUser(userID)),
     removeTypingUser: (userID) => dispatch(removeTypingUser(userID)),
+    setLang: (lng) => dispatch(setLanguage(lng)),
   };
 }
 
@@ -50,11 +53,14 @@ class App extends React.Component {
     usersTyping: React.PropTypes.array,
     addTypingUser: React.PropTypes.func,
     removeTypingUser: React.PropTypes.func,
+    setLang: React.PropTypes.func,
+    lng:React.PropTypes.string
   };
 
   componentDidMount() {
     const ID = Math.round(Math.random() * 1000000);
     this.props.setUserID(ID);
+    this.props.setLang('en');
     this.PubNub = PUBNUB.init({
       publish_key: 'pub-c-4d0f43b0-ff8d-4143-9fce-8adb0639c9f3',
       subscribe_key: 'sub-c-779a8948-3e64-11e6-85a4-0619f8945a4f',
@@ -78,6 +84,7 @@ class App extends React.Component {
     switch (presenceData.action) {
       case 'join':
         this.props.addUser(presenceData.uuid);
+        this.props.setLang('en');
         break;
       case 'leave':
       case 'timeout':
@@ -98,16 +105,22 @@ class App extends React.Component {
   }
 
   render() {
-    const { props, sendMessage, fetchHistory, setTypingState } = this;
+    const { props, sendMessage, fetchHistory, setTypingState,setLanguages } = this;
     return (
         <div className="message-container">
-          <ChatUsers users={ props.users } />
-          <ChatHistory userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
+          <ChatUsers users={ props.users } lng={props.lng} setLanguages={setLanguages}/>
+          <ChatHistory lng={props.lng} userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
           <ChatUsersTyping usersTyping={ props.usersTyping } />
           <ChatInput userID={ props.userID } sendMessage={ sendMessage } setTypingState={ setTypingState } />
         </div>
     );
   }
+  
+  setLanguages = (lng) =>{
+    this.props.setLang(lng);
+  }
+
+
 
   setTypingState = (isTyping) => {
     this.PubNub.state({
