@@ -102,7 +102,7 @@ class ChatInput extends React.Component {
       this.isTyping = false;
       this.props.setTypingState(this.isTyping);
       this.stopTypingTimeout = undefined;
-    }, 3000);
+    }, 1000);
   };
 }
 

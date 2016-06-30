@@ -53,18 +53,19 @@ class ChatHistory extends React.Component {
             { props.history.map((messageObj) => {
               const imgURL = '//robohash.org/' + messageObj.Who + '?set=set2&bgset=bg2&size=70x70';
               const messageDate = new Date(messageObj.When);
+              const messageText = messageObj.What;
               const messageDateTime = messageDate.toLocaleDateString() +
                   ' at ' + messageDate.toLocaleTimeString();
               var classes = 'message-item avatar' ;
               var me = props.userID == messageObj.Who ? ' me':'';
-  
+
               classes = classes + me;
               return (
                   <li className={classes} key={ messageObj.When }>
                     <div className="tint"><img src={ imgURL } alt={ messageObj.Who } className="circle" /></div>
                     <span className="title">Anonymous robot #{ messageObj.Who }</span>
                     <p className="message-text">
-                      <span>{ translate(messageObj.What) }</span>
+                      <span>{ props.translate(messageText) }</span>
                     </p>
                     <span className="message-date">{ messageDateTime }</span>
                   </li>
@@ -84,11 +85,7 @@ class ChatHistory extends React.Component {
     const maxScrollTop = scrollHeight - height;
     ReactDOM.findDOMNode(messageList).scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
   }
-
-  translate = (str) =>{
-    const { refs, props } = this;
-    return str + ' - ' + props.lng;
-  }
+  
 }
 
 export default ChatHistory;

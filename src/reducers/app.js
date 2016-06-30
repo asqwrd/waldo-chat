@@ -7,6 +7,7 @@ import {
   ADD_TYPING_USER,
   REMOVE_TYPING_USER,
   SET_LANG,
+  TRANSLATE,
 } from '../constants';
 import { fromJS } from 'immutable';
 
@@ -24,6 +25,8 @@ function appReducer(state = INITIAL_STATE, action = {}) {
     return state.update('userID', () => action.payload);
   case SET_LANG:
     return state.update('lng', () => action.payload);
+  case TRANSLATE:
+    return state.update('message', () => action.payload);
   case ADD_MESSAGE:
     return state.update('messages', (messages) => messages.concat(action.payload));
   case ADD_HISTORY:

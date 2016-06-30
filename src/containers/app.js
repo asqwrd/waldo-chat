@@ -13,6 +13,7 @@ import {
     addTypingUser,
     removeTypingUser,
     setLanguage,
+    translate,
 } from '../actions';
 
 function mapStateToProps(state) {
@@ -36,6 +37,7 @@ function mapDispatchToProps(dispatch) {
     addTypingUser: (userID) => dispatch(addTypingUser(userID)),
     removeTypingUser: (userID) => dispatch(removeTypingUser(userID)),
     setLang: (lng) => dispatch(setLanguage(lng)),
+    translate: (message) => dispatch(translate(lng)),
   };
 }
 
@@ -105,11 +107,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { props, sendMessage, fetchHistory, setTypingState,setLanguages } = this;
+    const { props, sendMessage, fetchHistory, setTypingState,setLanguages,translate } = this;
     return (
         <div className="message-container">
           <ChatUsers users={ props.users } lng={props.lng} setLanguages={setLanguages}/>
-          <ChatHistory lng={props.lng} userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
+          <ChatHistory translate={translate} lng={props.lng} userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
           <ChatUsersTyping usersTyping={ props.usersTyping } />
           <ChatInput userID={ props.userID } sendMessage={ sendMessage } setTypingState={ setTypingState } />
         </div>
@@ -143,7 +145,7 @@ class App extends React.Component {
       callback: (data) => {
         // data is Array(3), where index 0 is an array of messages
         // and index 1 and 2 are start and end dates of the messages
-        props.addHistory(data[0], data[1]);
+        //props.addHistory(data[0], data[1]);
       },
     });
   }
@@ -154,7 +156,29 @@ class App extends React.Component {
       message: message,
     });
   }
-}
+
+  translate = (str) =>{
+    const { props } = this;
+    $.ajax({
+      url:'http://52.87.237.111/todo/api/v1.0/tasks/2',
+      dataType:'json',
+      method:"PUT",
+      data:JSON.stringify({"input":str}),
+      async:false,
+      contentType: 'application/json'
+    }).success((data)=>{
+      str = data.response + '('+Math.round(data.sentiment)+')' ;
+    }).error((error)=>{
+        console.log(error);
+    });
+    
+    return str;
+  }
+
+
+ }
+
+
 
 export default connect(
     mapStateToProps,
