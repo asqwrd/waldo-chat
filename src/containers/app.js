@@ -37,7 +37,7 @@ function mapDispatchToProps(dispatch) {
     addTypingUser: (userID) => dispatch(addTypingUser(userID)),
     removeTypingUser: (userID) => dispatch(removeTypingUser(userID)),
     setLang: (lng) => dispatch(setLanguage(lng)),
-    translate: (message) => dispatch(translate(lng)),
+    translate: (message,index) => dispatch(translate(message,index)),
   };
 }
 
@@ -46,6 +46,7 @@ class App extends React.Component {
     history: React.PropTypes.array,
     userID: React.PropTypes.number,
     addMessage: React.PropTypes.func,
+    translate: React.PropTypes.func,
     setUserID: React.PropTypes.func,
     addHistory: React.PropTypes.func,
     lastMessageTimestamp: React.PropTypes.string,
@@ -58,6 +59,7 @@ class App extends React.Component {
     setLang: React.PropTypes.func,
     lng:React.PropTypes.string
   };
+  
 
   componentDidMount() {
     const ID = Math.round(Math.random() * 1000000);
@@ -70,7 +72,7 @@ class App extends React.Component {
       uuid: ID,
     });
     this.PubNub.subscribe({
-      channel: 'DemoChat',
+      channel: 'DemoChar2',
       message: this.props.addMessage,
       presence: this.onPresenceChange,
     });
@@ -111,9 +113,9 @@ class App extends React.Component {
     return (
         <div className="message-container">
           <ChatUsers users={ props.users } lng={props.lng} setLanguages={setLanguages}/>
-          <ChatHistory translate={translate} lng={props.lng} userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
+          <ChatHistory lng={props.lng} userID={ props.userID } history={ props.history } fetchHistory={ fetchHistory } />
           <ChatUsersTyping usersTyping={ props.usersTyping } />
-          <ChatInput userID={ props.userID } sendMessage={ sendMessage } setTypingState={ setTypingState } />
+          <ChatInput lng={props.lng} userID={ props.userID } sendMessage={ sendMessage } setTypingState={ setTypingState } />
         </div>
     );
   }
@@ -126,57 +128,39 @@ class App extends React.Component {
 
   setTypingState = (isTyping) => {
     this.PubNub.state({
-      channel: 'DemoChat',
+      channel: 'DemoChat2',
       uuid: this.props.userID,
       state: { isTyping },
     });
   };
 
   leaveChat = () => {
-    this.PubNub.unsubscribe({ channel: 'DemoChat' });
+    this.PubNub.unsubscribe({ channel: 'DemoChar2' });
   }
 
   fetchHistory = () => {
     const { props } = this;
     this.PubNub.history({
-      channel: 'DemoChat',
+      channel: 'DemoChar2',
       count: 15,
       start: props.lastMessageTimestamp,
       callback: (data) => {
         // data is Array(3), where index 0 is an array of messages
         // and index 1 and 2 are start and end dates of the messages
-        //props.addHistory(data[0], data[1]);
+        props.addHistory(data[0], data[1]);
+        
       },
     });
   }
 
   sendMessage = (message) => {
     this.PubNub.publish({
-      channel: 'DemoChat',
+      channel: 'DemoChar2',
       message: message,
     });
   }
-
-  translate = (str) =>{
-    const { props } = this;
-    $.ajax({
-      url:'http://52.87.237.111/todo/api/v1.0/tasks/2',
-      dataType:'json',
-      method:"PUT",
-      data:JSON.stringify({"input":str}),
-      async:false,
-      contentType: 'application/json'
-    }).success((data)=>{
-      str = data.response + '('+Math.round(data.sentiment)+')' ;
-    }).error((error)=>{
-        console.log(error);
-    });
-    
-    return str;
-  }
-
-
- }
+  
+}
 
 
 

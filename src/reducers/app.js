@@ -26,7 +26,9 @@ function appReducer(state = INITIAL_STATE, action = {}) {
   case SET_LANG:
     return state.update('lng', () => action.payload);
   case TRANSLATE:
-    return state.update('message', () => action.payload);
+    return state.update('messages', (messages) =>{
+      return messages;
+    });
   case ADD_MESSAGE:
     return state.update('messages', (messages) => messages.concat(action.payload));
   case ADD_HISTORY:

@@ -41,10 +41,13 @@ export function addHistory(messages, timestamp) {
   };
 }
 
-export function translate(message) {
+export function translate(message,index) {
   return {
     type: TRANSLATE,
-    payload:message
+    payload:{
+      message,
+      index,
+    },
   };
 }
 

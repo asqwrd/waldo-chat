@@ -5,6 +5,7 @@ class ChatInput extends React.Component {
     userID: React.PropTypes.number,
     sendMessage: React.PropTypes.func,
     setTypingState: React.PropTypes.func,
+    lng:React.PropTypes.string
   };
 
   componentDidMount() {
@@ -25,6 +26,7 @@ class ChatInput extends React.Component {
       Who: this.props.userID,
       What: message,
       When: new Date().valueOf(),
+      Lang:this.props.lng
     };
     this.props.sendMessage(messageObj);
 

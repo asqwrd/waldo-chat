@@ -9,12 +9,17 @@ class ChatUsers extends React.Component {
 
     componentDidMount() {
         $(this.refs.selectBox).material_select(this.onChange.bind(this));
+
     }
 
     onChange = () => {
         const { setLanguages } = this.props;
         setLanguages(this.refs.selectBox.value);
-        console.log(this.props.lng);
+        const myEvent = new CustomEvent("languageChanged", {
+            lng: ''
+        });
+        document.dispatchEvent(myEvent);
+        
     };
 
     render() {
@@ -29,6 +34,7 @@ class ChatUsers extends React.Component {
                         <option value="en">English</option>
                         <option value="es">Spanish</option>
                         <option value="fr">French</option>
+                        <option value="ht">Haitian Creole</option>
                     </select>
                 </div>
                 <ul className="online-users">{
