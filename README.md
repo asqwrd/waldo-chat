@@ -6,3 +6,5 @@ Now Using React
 run npm install to build the packages
 
 after that run npm start to serve the files to server
+ or check it out here
+ http://ajibade.me:8080/
